@@ -6,22 +6,25 @@ function login(username, password) {
     return false;
 }
 
-// Xử lý form trên giao diện
-document.getElementById("loginForm").addEventListener("submit", function(event) {
-    event.preventDefault();
+// Chỉ chạy phần giao diện khi đang ở trình duyệt
+if (typeof document !== "undefined") {
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+        event.preventDefault();
 
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-    const message = document.getElementById("message");
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
 
-    if (login(username, password)) {
-        message.textContent = "Đăng nhập thành công!";
-    } else {
-        message.textContent = "Sai username hoặc password!";
-    }
-});
+        const message = document.getElementById("message");
 
-// Export để Jest có thể kiểm thử
+        if (login(username, password)) {
+            message.textContent = "Đăng nhập thành công!";
+        } else {
+            message.textContent = "Sai username hoặc password!";
+        }
+    });
+}
+
+// Cho phép Jest sử dụng hàm login
 if (typeof module !== "undefined") {
     module.exports = login;
 }
